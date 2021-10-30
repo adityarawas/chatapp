@@ -1,7 +1,8 @@
+import {useContext} from 'react'
+import {AccountContext} from '../../../context/AccountProvider'
 import { Dialog, withStyles, Box, Typography, makeStyles, List, ListItem, Button } from "@material-ui/core"
 import {GoogleLogin} from 'react-google-login'
-
-
+import { googleapi } from '../../../utils'
 
 const useStyles = makeStyles({
     component:{
@@ -42,19 +43,22 @@ const styles = {
     }
 }
 
-const onLoginSuccess = (res) =>{
-    console.log(res.profileObj)
-    console.log("Login Successful")
-}
 
-const onLoginFailure = () =>{
-    console.log("Login Unsuccessful")
-    
-}
 
 const Login = ({classes}) => {
+
+    const {account, setAccount} = useContext(AccountContext)
+    const onLoginSuccess = (res) =>{
+        console.log(res.profileObj)
+        setAccount(res.profileObj)
+        console.log("Login Successful")
+    }
+    
+    const onLoginFailure = () =>{
+        console.log("Login Unsuccessful")
+        
+    }
     const className = useStyles();
-    const clientId = "150730818658-c56m1tu1vphvitu5js98mh45fjg0178a.apps.googleusercontent.com"
     return (
      <Dialog 
      open={true}
@@ -75,7 +79,7 @@ const Login = ({classes}) => {
                     isSignedIn={true}
                     onSuccess={onLoginSuccess}
                     onFailure={onLoginFailure}
-                    clientId={clientId}
+                    clientId={googleapi}
                />
              </Box>
          </Box>

@@ -1,10 +1,11 @@
 import './App.css';
 import Messenger from './components/Messenger/Messenger';
+import AccountProvider from './context/AccountProvider';
 function App() {
   return (
-    <div className="App">
+    <AccountProvider>
       <Messenger />
-    </div>
+    </AccountProvider>
   );
 }
 
