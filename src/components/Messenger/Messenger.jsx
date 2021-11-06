@@ -9,6 +9,11 @@ const useStyles = makeStyles({
     background: "#00bfa5",
     boxShadow: "none",
   },
+  header: {
+    height: 115,
+    background: "#00bfa5",
+    boxShadow: "none",
+  },
   componenet:{
     background:"#DCDCDc",
     height:"100vh"
@@ -20,7 +25,7 @@ const Messenger = () => {
   const {account} = useContext(AccountContext)
   return (
     <Box className={classes.componenet}>
-      <AppBar className={classes.loginHeader}>
+      <AppBar className={ account ? classes.header : classes.loginHeader}>
         <Toolbar></Toolbar>
       </AppBar>
       {
