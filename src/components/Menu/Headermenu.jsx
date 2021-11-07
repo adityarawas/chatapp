@@ -32,7 +32,7 @@ const Headermenu = () => {
 
   const handleClose = () => {
     SetOpen(false);
-    drawersetOpen(!draweropen);
+   
   };
   const handelOpen = () => {
     SetOpen(!open);
@@ -56,7 +56,7 @@ const Headermenu = () => {
           left: "-30%",
         }}
       >
-        <MenuItem className={classes.menuItem} onClick={handleClose}>
+        <MenuItem className={classes.menuItem} onClick={()=>{ drawersetOpen(!draweropen);SetOpen(!open);}}>
           Profile
         </MenuItem>
         <MenuItem className={classes.menuItem} onClick={handleClose}>
