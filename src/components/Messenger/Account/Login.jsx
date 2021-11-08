@@ -3,7 +3,7 @@ import {AccountContext} from '../../../context/AccountProvider'
 import { Dialog, withStyles, Box, Typography, makeStyles, List, ListItem, Button } from "@material-ui/core"
 import {GoogleLogin} from 'react-google-login'
 import { googleapi } from '../../../utils'
-
+import {addUsers} from '../../../service/api'
 const useStyles = makeStyles({
     component:{
         display:"flex",
@@ -49,8 +49,8 @@ const Login = ({classes}) => {
 
     const {account, setAccount} = useContext(AccountContext)
     const onLoginSuccess = (res) =>{
-        console.log(res.profileObj)
         setAccount(res.profileObj)
+        addUsers(res.profileObj)
         console.log("Login Successful")
     }
     

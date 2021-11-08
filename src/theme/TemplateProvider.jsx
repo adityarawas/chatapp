@@ -1,11 +1,11 @@
-import { ThemeProvider, createMuiTheme } from "@material-ui/core/styles"
+import { ThemeProvider, createTheme  } from "@material-ui/core/styles"
 import React, {createContext} from "react"
 
 const TemplateContext = createContext(null)
 
 const TemplateProvider = ({children}) => {
 
-    const theme = createMuiTheme({
+    const theme = createTheme ({
             overrides:{
                 MuiDrawer:{
                     paperAnchorLeft:{
