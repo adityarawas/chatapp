@@ -25,3 +25,12 @@ export const getUsers = async (data) =>{
         return {data:{users:[]}}
     }
 }
+
+
+export const setConversation = async (data) =>{
+    try{
+        const resp = await client.post('/conversation/add',data)
+    }catch(error){
+        console.log(error)
+    }
+}

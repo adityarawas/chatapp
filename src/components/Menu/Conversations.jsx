@@ -1,29 +1,59 @@
-import { useEffect, useState } from "react"
+import { useEffect, useState, useContext } from "react";
 import { getUsers } from "../../service/api";
-import {Box} from '@material-ui/core'
+import { Box, makeStyles } from "@material-ui/core";
 import Conversation from "./Conversation";
-const Conversations = () => {
-    const [users,setUsers] = useState([])
-    useEffect(() => {
-        getUsers()
-        .then(data=>{
-            if(data?.data?.users?.length){
-                setUsers(data?.data?.users)
-            }
-        })
-        .catch(err=>{
-            console.log(err)
-        })
-    }, [])
-    return (
-        <Box>
-            {
-                users?.map(i=>{
-                  return  <Conversation user={i}/>
-                })
-            }
-        </Box>
-    )
-}
+import { AccountContext } from "../../context/AccountProvider";
 
-export default Conversations
+const useStyles = makeStyles({
+  component: {
+    height: "77.5vh",
+    overflowY: "auto",
+  },
+  noUsers: {
+    textAlign: "center",
+    padding: "5px  0",
+    color: "#746f6f",
+  },
+});
+const Conversations = ({ text }) => {
+  const classes = useStyles();
+  const { account } = useContext(AccountContext);
+  const [users, setUsers] = useState([]);
+  useEffect(() => {
+    getUsers()
+      .then((data) => {
+        if (data?.data?.users?.length) {
+          const getusers = data?.data?.users;
+          let newusers = getusers.filter((i) => i.email != account.email);
+          if (text?.length) {
+            console.log(text);
+            newusers = newusers.filter((i) => i.name.includes(text));
+          }
+
+          setUsers(newusers);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [text]);
+
+
+
+  return (
+    <Box className={classes.component}
+    >
+      {users.length ? (
+        users?.map((i) => {
+          return <Conversation user={i} />;
+        })
+      ) : (
+        <div className={classes.noUsers}>
+          <span>No users found</span>
+        </div>
+      )}
+    </Box>
+  );
+};
+
+export default Conversations;

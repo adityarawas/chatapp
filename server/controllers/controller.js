@@ -4,11 +4,11 @@ export const addUsers = (req,res) =>{
     const data = {...req.body}
     
     User.findOne({email:data.email})
-    .then(user=>{
+    .then(async user =>{
         if(user?._id){
             return res.json({message:"Logged in successfully"}).status(200)
         }else{
-            const newuser = new User(data)
+            const newuser = await new User(data)
             newuser.save().then(data=>{
                 return res.json({"success":"User Created"}).status(200)
             })

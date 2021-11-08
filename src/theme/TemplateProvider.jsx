@@ -6,7 +6,9 @@ const TemplateContext = createContext(null)
 const TemplateProvider = ({children}) => {
 
     const theme = createTheme ({
+
             overrides:{
+     
                 MuiDrawer:{
                     paperAnchorLeft:{
                         height:"90%",
