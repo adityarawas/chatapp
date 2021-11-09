@@ -20,16 +20,37 @@ const useStyles = makeStyles({
     padding: "1px 18px",
   },
 });
-const Messages = ({ convesation }) => {
-  const { account } = useContext(AccountContext);
+const Messages = ({ person, convesation }) => {
+  const { account, socket, newMessageFlag, setnewMessageFlag } =
+    useContext(AccountContext);
   const [convMessages, setconvMessages] = useState([]);
+  const [incoming, setincoming] = useState(null);
+  useEffect(() => {
+    socket.current.on("getMessage", (data) => {
+      setincoming({
+        sender: data.senderId,
+        message: data.text,
+        createdAt: Date.now(),
+      });
+    });
+  }, []);
+
+  useEffect(() => {
+    if (
+      incoming &&
+      convesation?.data?.members[0].$all.includes(incoming.sender)
+    ) {
+      setconvMessages((prev) => [...prev, incoming]);
+    }
+  }, [incoming, convesation]);
+
   useEffect(() => {
     const getMessageDetails = async () => {
       const resp = await getMessage(convesation?.data?.conversationid);
       setconvMessages(resp.data.messages);
     };
     getMessageDetails();
-  }, [convesation?.data?.conversationid]);
+  }, [convesation?.data?.conversationid, person._id, newMessageFlag]);
 
   const classes = useStyles();
   const [message, setMessage] = useState("");
@@ -42,9 +63,20 @@ const Messages = ({ convesation }) => {
           message,
           sender: account.googleId,
         };
+        const receiverId = convesation?.data?.members[0].$all.find(
+          (i) => i !== account.googleId
+        );
+
+        socket.current.emit("sendMessage", {
+          senderId: account.googleId,
+          receiverId,
+          text: message,
+        });
+
         const resp = await newmessage(msgDetails);
         if (resp.status == 200) {
           setMessage("");
+          setnewMessageFlag((prev) => !prev);
         }
       }
     }
@@ -56,9 +88,20 @@ const Messages = ({ convesation }) => {
         message,
         sender: account.googleId,
       };
+      const receiverId = convesation?.data?.members[0].$all.find(
+        (i) => i !== account.googleId
+      );
+
+      socket.current.emit("sendMessage", {
+        senderId: account.googleId,
+        receiverId,
+        text: message,
+      });
+
       const resp = await newmessage(msgDetails);
       if (resp.status == 200) {
         setMessage("");
+        setnewMessageFlag((prev) => !prev);
       }
     }
   };

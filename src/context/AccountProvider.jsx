@@ -5,6 +5,8 @@ export const AccountContext = createContext(null);
 const AccountProvider = ({children}) => {
     const [account, setAccount] = useState(null)
     const [activeUsers, setactiveUsers] = useState([])
+    const [newMessageFlag, setnewMessageFlag] = useState(false)
+
 
     const socket = useRef();
 
@@ -18,7 +20,7 @@ const AccountProvider = ({children}) => {
     
     return (
         <>
-        <AccountContext.Provider value={{account,setAccount,socket,setactiveUsers,activeUsers}}>
+        <AccountContext.Provider value={{account,setAccount,socket,setactiveUsers,activeUsers, newMessageFlag,  setnewMessageFlag}}>
             {children}
         </AccountContext.Provider>
         </>

@@ -25,7 +25,7 @@ const Chat = () => {
     return (
         <Box>
             <ChatHeader />
-            <Messages convesation={convesation} />
+            <Messages convesation={convesation} person={person}/>
         </Box>
     )
 }

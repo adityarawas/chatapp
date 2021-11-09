@@ -41,10 +41,11 @@ export const getConversation = (req, res) =>{
                 })
                 newconversation.save()
                 .then(convo =>{
-                    res.json({message:"New conversation added",conversationid:convo._id}).status(200)
+                    res.json({message:"New conversation added",conversation:convo._id,members:convo.members}).status(200)
                 })
             }else{
-                res.json({message:"New already exist",conversationid:existingConversation._id}).status(200)
+                console.log(existingConversation)
+                res.json({message:"New already exist",conversationid:existingConversation._id,members:existingConversation.members}).status(200)
 
             }
         })
