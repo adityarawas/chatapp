@@ -24,3 +24,4 @@ yarn-error.log*
 src/utils.js
 server/node_modules
 server/.env
+socket/node_modules

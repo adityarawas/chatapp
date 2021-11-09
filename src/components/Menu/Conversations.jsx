@@ -17,7 +17,7 @@ const useStyles = makeStyles({
 });
 const Conversations = ({ text }) => {
   const classes = useStyles();
-  const { account } = useContext(AccountContext);
+  const { account, socket, setactiveUsers } = useContext(AccountContext);
   const [users, setUsers] = useState([]);
   useEffect(() => {
     getUsers()
@@ -38,6 +38,12 @@ const Conversations = ({ text }) => {
       });
   }, [text]);
 
+  useEffect(() => {
+    socket.current.emit('addUser', account.googleId)
+    socket.current.on('getUsers',users=>{
+      setactiveUsers(users)
+    })
+  }, [account])
 
 
   return (

@@ -14,7 +14,6 @@ export const addUsers = async (data) =>{
     }
 }
 
-
 // get
 export const getUsers = async (data) =>{
     try{    
@@ -26,11 +25,39 @@ export const getUsers = async (data) =>{
     }
 }
 
-
 export const setConversation = async (data) =>{
     try{
         const resp = await client.post('/conversation/add',data)
     }catch(error){
         console.log(error)
+    }
+}
+
+export const getConversation = async (data) =>{
+    try{
+        const resp = await client.post('/conversation/get',data)
+        return resp
+    }catch(error){
+        console.log(`ERROR WHILE CALLING getConversation ${error}`)
+    }
+}
+
+export const newmessage = async (data)=>{
+    try{
+        const resp = await client.post('/conversation/new',data)
+        return resp
+    }catch(error){
+        console.log(`ERROR WHILE CALLING newmessage ${error}`)
+
+    }
+}
+
+
+export const getMessage = async (data) =>{
+    try{
+        const resp = await client.get(`/conversation/get/${data}`)
+        return resp
+    }catch(err){
+        console.log(`ERROR WHILE CALLING getMessage ${err}`)
     }
 }

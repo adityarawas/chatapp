@@ -26,6 +26,7 @@ const InfoDrawer = ({open,setOpen}) => {
         <Drawer open={open} 
         BackdropProps={{ invisible: true }}
         PaperProps={{ elevation: 0 }}
+        className={classes.drawer}
         >
                 <Box className={classes.header}>
                         <ArrowBack onClick={handelClose}  style={{cursor:"pointer"}}/>

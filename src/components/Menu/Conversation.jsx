@@ -33,7 +33,7 @@ const Conversation = ({user}) => {
     const classes = useStyles();
     const setUser = ()=>{
         setPerson(user)
-      setConversation({senderId:account.googleId, reciverId:user.googleId})
+            setConversation({senderId:account.googleId, receiverId:user.googleId})
     }
     return (
         <Box className={classes.component}

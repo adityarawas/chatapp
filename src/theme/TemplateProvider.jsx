@@ -13,7 +13,7 @@ const TemplateProvider = ({children}) => {
                     paperAnchorLeft:{
                         height:"90%",
                         top:'5%',
-                        width:"24.8%",
+                        width:"380px",
                         left:'5%'
                     },
              
